@@ -2,7 +2,7 @@ from lz78 import compress
 
 class Transmitter:
 	def __init__(self):
-		self.text = '';
+		self.text = ''
 
 	def readTextFromFile(self, filename):
 		with open(filename, 'r') as file:
