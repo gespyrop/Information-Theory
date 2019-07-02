@@ -10,4 +10,5 @@ class Transmitter:
 
 	#Main method for all the transmitter related procedure
 	def send(self, receiver):
-		receiver.receive(self.text)
+		compressed = compress(self.text)
+		receiver.receive(compressed)
