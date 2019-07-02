@@ -7,4 +7,4 @@ class Receiver:
 	#Main method for all the receiver related procedure
 	def receive(self, text):
 		decompressed = decompress(text)
-		print(decompressed)
+		print("\nDecompressed message: {}".format(decompressed))
