@@ -1,5 +1,4 @@
 from lz78 import compress
-from sys import getsizeof
 
 class Transmitter:
 	def __init__(self):
@@ -11,8 +10,7 @@ class Transmitter:
 
 	#Main method for all the transmitter related procedure
 	def send(self, receiver):
-		print('\nOriginal size:',getsizeof(self.text))
+		print('\nOriginal size: {} bytes'.format(len(self.text))) #Each character is 1 byte
 		compressed = compress(self.text)
-		print('Compressed size:',getsizeof(compressed))
-		print("\nCompressed message: {}".format(compressed))
+		print('Compressed size: {} bytes'.format(len(compressed) / 4)) #Each 4 bits are 1 byte
 		receiver.receive(compressed)

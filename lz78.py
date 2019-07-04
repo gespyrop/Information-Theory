@@ -1,7 +1,9 @@
+from math import log
+
 def compress(text):
 	dictionary = {'' : 0}
 
-	compressed = ''
+	pairs = []	#Compressed pairs (index, symbol)
 	w = ''
 
 	for c in text:
@@ -12,42 +14,83 @@ def compress(text):
 
 		#If it's a new word
 		else:
-			compressed += '({},{})'.format(str((dictionary[w])), c) #Adding new term to the output
+			pairs.append((dictionary[w], c)) #Adding new term to the pairs' list
 			dictionary[w + c] = len(dictionary) #Adding the new word to the dicitonary
 			w = '' #Reinitializing the word
 
 	#If the last word is already in the dicitonary
 	if w != '':
-		compressed += '({})'.format(str((dictionary[w])), c)
+		pairs.append(((dictionary[w]),''))
 
-	return compressed
+	return binaryEncode(pairs)
 
 
 def decompress(compressed):
-	dictionary = {0 : ''}
 
+	pairs = binaryDecode(compressed)
+
+	dictionary = {0 : ''}
+	
 	decompressed = ''
 
-	#Creating a list containing all terms
-	terms = compressed.split(')(')
-	terms[0] = terms[0][1:]
-	terms[-1] = terms[-1][:-1]
+	for pair in pairs:
+		index = pair[0]
+		symbol = pair[1]
 
-	for term in terms:
+		word = dictionary[index] + symbol
 
-		#If the term contains a new symbol
-		if ',' in term:
-			pair = term.split(',')
-			index = int(pair[0])
-			symbol = pair[1]
+		#If the word is not already in the dictionary
+		if symbol != '':
+			dictionary[len(dictionary)] = word	#Add
 
-			word = dictionary[index] + symbol
-
-			dictionary[len(dictionary)] = word
-			decompressed += word
-
-		#If the last word is already in the dicitonary	
-		else:
-			decompressed += dictionary[int(term)]
+		decompressed += word
 
 	return decompressed
+
+#Encoding LZ78 compressed pairs to binary
+def binaryEncode(pairs):
+	encoded = binaryAscii(pairs[0][1])
+
+	for iteration, pair in enumerate(pairs[1:]):
+		index = pair[0]
+		symbol = pair[1]
+
+		index_len = int(log(iteration + 1, 2) + 1)
+		
+		encoded += BitIt(index, index_len) + binaryAscii(symbol)
+
+	return encoded
+
+#Decoding binary to LZ78 compressed pairs
+def binaryDecode(binary):
+	pairs = [(0, chr(int(binary[0:7], 2)))]
+
+	cursor = 7
+	iteration = 1
+
+	while cursor < len(binary):
+		index_len = int(log(iteration, 2) + 1)
+
+		index = int(binary[cursor : cursor + index_len], 2)
+		cursor += index_len
+
+		if cursor < len(binary):
+			symbol = chr(int(binary[cursor : cursor + 7], 2))
+			cursor += 7
+		else:
+			symbol = ''
+
+		pairs.append((index,symbol))
+
+		iteration += 1
+
+	return pairs
+
+
+#So
+def BitIt(num, length):
+	#just BitIt hooooooo
+	return format(int(bin(num)[2:]), '#0' + str(length)) #Returns binary string of specified length
+
+def binaryAscii(character):
+	return BitIt(ord(character), 7) if character != '' else ''
