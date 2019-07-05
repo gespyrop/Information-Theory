@@ -47,6 +47,15 @@ def decompress(compressed):
 
 	return decompressed
 
+
+
+#So
+BitIt = lambda num, length : format(int(bin(num)[2:]), '#0' + str(length)) #Returns binary string of specified length
+#just BitIt hooooooo
+	
+binaryAscii = lambda character : BitIt(ord(character), 7) if character != '' else ''
+
+
 #Encoding LZ78 compressed pairs to binary
 def binaryEncode(pairs):
 	encoded = binaryAscii(pairs[0][1])
@@ -85,12 +94,3 @@ def binaryDecode(binary):
 		iteration += 1
 
 	return pairs
-
-
-#So
-def BitIt(num, length):
-	#just BitIt hooooooo
-	return format(int(bin(num)[2:]), '#0' + str(length)) #Returns binary string of specified length
-
-def binaryAscii(character):
-	return BitIt(ord(character), 7) if character != '' else ''
