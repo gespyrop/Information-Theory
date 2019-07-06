@@ -1,4 +1,5 @@
 from lz78 import compress
+from entropy import calculateEntropy
 
 class Transmitter:
 	def __init__(self):
@@ -10,7 +11,12 @@ class Transmitter:
 
 	#Main method for all the transmitter related procedure
 	def send(self, receiver):
-		print('\nOriginal size: {} bytes'.format(len(self.text))) #Each character is 1 byte
+		
+		#Original Text
+		print('\nOriginal Size: {} bytes\nOriginal Text Entropy: {}'.format(len(self.text), calculateEntropy(self.text))) #Each character is 1 byte
+
+		#Compressed Text
 		compressed = compress(self.text)
-		print('Compressed size: {} bytes'.format(len(compressed) / 4)) #Each 4 bits are 1 byte
+		print('\nCompressed Size: {} bytes\nCompressed Text Entropy: {}'.format(len(compressed) / 4, calculateEntropy(compressed))) #Each 4 bits are 1 byte
+
 		receiver.receive(compressed)
