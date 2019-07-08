@@ -5,9 +5,9 @@ transmitter = Transmitter()
 receiver = Receiver()
 
 try:
-	filename = input("Insert file name: ")
+	filename = raw_input("Insert file name: ")
 
 	transmitter.readTextFromFile(filename)
 	transmitter.send(receiver)
-except FileNotFoundError:
+except IOError:
 	print("File '{}' not found!".format(filename))
