@@ -17,6 +17,6 @@ class Transmitter:
 
 		#Compressed Text
 		compressed = compress(self.text)
-		print('\nCompressed Size: {} bytes\nCompressed Text Entropy: {}'.format(len(compressed) / 4, calculateEntropy(compressed))) #Each 4 bits are 1 byte
+		print('\nCompressed Size: {} bytes\nCompressed Text Entropy: {}'.format(len(compressed) / 8, calculateEntropy(compressed))) #Each 8 bits are 1 byte
 
 		receiver.receive(compressed)
