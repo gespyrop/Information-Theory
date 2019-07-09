@@ -11,9 +11,9 @@ receiver = Receiver()
 try:
 	filename = raw_input("Insert file name: ")
 	try:
-		P = input("\n(Press ENTER to use a default [13, 3] linear code option)\nInsert P matrix as list of lists(rows): ")
+		P = input("\n(Press ENTER to use a default [12, 3] linear code option)\nInsert P matrix as list of lists(rows): ")
 	except Exception:
-		P = [[0, 1, 1, 1, 0, 1, 0, 1, 0, 1], [0, 0, 0, 1, 1, 1, 0, 1, 0, 1], [1, 1, 0, 0, 0, 0, 0, 1, 1, 1]]
+		P = [[0, 1, 1, 1, 0, 1, 0, 1, 0], [0, 0, 0, 1, 1, 1, 0, 1, 0], [1, 1, 0, 0, 0, 0, 0, 1, 1]]
 
 	print("Warning: Current code can correct up to {} errors per word!\n".format(LC.getErrorCorrectingCapability(P)))
 	maxNoise = int(raw_input("Insert max noise per word: "))
