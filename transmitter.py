@@ -33,5 +33,5 @@ class Transmitter:
 
 		json = dumps({"compression_algorithm":"LZ78", "code":{"name":"linear", "P":P}, "base64encoded":base64encoded})
 
-		print("\nSending JSON...\n")
+		print("Sending JSON...\n")
 		receiver.receive(json)
