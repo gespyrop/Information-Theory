@@ -33,19 +33,22 @@ def decompress(compressed):
 	
 	decompressed = ''
 
-	for pair in pairs:
-		index = pair[0]
-		symbol = pair[1]
+	try:
+		for pair in pairs:
+			index = pair[0]
+			symbol = pair[1]
 
-		word = dictionary[index] + symbol
+			word = dictionary[index] + symbol
 
-		#If the word is not already in the dictionary
-		if symbol != '':
-			dictionary[len(dictionary)] = word	#Add
+			#If the word is not already in the dictionary
+			if symbol != '':
+				dictionary[len(dictionary)] = word	#Add
 
-		decompressed += word
+			decompressed += word
 
-	return decompressed
+		return decompressed
+	except KeyError:
+		return "\n\nERROR: Too much noise!"
 
 
 

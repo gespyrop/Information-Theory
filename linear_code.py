@@ -23,6 +23,8 @@ class LC():
 		for word in words:
 			encoded += self.encodeWord(word, self.maxNoise)
 
+		print("{} bits added!".format(len(encoded) - len(original)))
+
 		return encoded
 
 	#Encoding given binary
@@ -62,3 +64,13 @@ class LC():
 	@staticmethod
 	def getRandomNoise(length, noise_v):
 		return sage.coding.channel_constructions.random_error_vector(length, GF(2), [randrange(length) for i in range(randrange(noise_v + 1))])
+
+	@staticmethod
+	def getErrorCorrectingCapability(P):
+		P = Matrix(P)
+		L = LinearCode(Matrix(GF(2), identity_matrix(P.nrows()).augment(P)))
+		print  "\n", L
+		d = L.minimum_distance()
+		return (d - 1) / 2
+		
+		
