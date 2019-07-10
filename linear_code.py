@@ -12,7 +12,7 @@ class LC():
 	#Encoding given binary
 	def encode(self, original):
 
-		#Adding zeros to the end
+		#Padding
 		while len(original) % self.C.dimension() != 0:
 			original += '0'
 

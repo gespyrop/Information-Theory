@@ -48,7 +48,7 @@ def decompress(compressed):
 
 		return decompressed
 	except KeyError:
-		return "\n\nERROR: Too much noise!"
+		return "{}\n\nERROR: Too much noise! Decompression failed!".format(decompressed)
 
 
 
